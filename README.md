@@ -14,6 +14,7 @@
 #### 二、功能介绍
 
 
+<iframe src="//player.bilibili.com/player.html?aid=612801653&bvid=BV1ph4y1p7Hq&cid=1105709938&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 
 
@@ -40,7 +41,6 @@
 重要提示：具体操作可关注哔哩哔哩
 哔哩哔哩教程: https://space.bilibili.com/153276950
 QQ群号: 708329713
-
 主要功能：生成动画仅支持Google Earth Pro
 - 点：环绕浏览、四顾浏览、圆环饼图
 - 线：固定视角生长、环绕视角生长、跟随视角生长
