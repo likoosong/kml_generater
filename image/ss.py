@@ -237,6 +237,40 @@ kml.save('car.kml')
 
 
 
+
+
+
+三、python 模块
+
+```
+pip install simplekml
+```
+
+
+
+```
+country-bounding-boxes 国家边界
+pygeoj
+pip install georeverse     找到给经纬度的城市、州和国家/地区的最佳估值
+pip install geojso 可解析  并随机生成点、线、面
+
+
+将 geoJson 转换为 KML 格式。来自https://github.com/mapbox/tokml的端口
+pip3 install geo2kml
+
+from osgeo import gdal, ogr
+srcDS = gdal.OpenEx('input.kml')
+ds = gdal.VectorTranslate('output.json', srcDS, format='GeoJSON')
+
+
+```
+
+
+
+
+
+
+
 '''
 
 
