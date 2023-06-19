@@ -3,8 +3,10 @@ import sys
 import time
 import traceback
 
+import simplekml
 import qtawesome
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QColor
 from pyqt_toast import Toast
 
 from tour.tour_point_centre import TourPointCentre
@@ -708,26 +710,21 @@ class MainUi(QtWidgets.QMainWindow):
         self.right_bar_tour_show_polygon_kmlname = QtWidgets.QLabel('名称  Kmlname')
         self.right_bar_tour_show_polygon_kmlname.setObjectName("right_bar_tour_label")
         self.right_bar_widget_show_polygon_kmlname_input = QtWidgets.QLineEdit()
-        self.right_bar_widget_show_polygon_kmlname_input.setText('上海东方明珠')
+        self.right_bar_widget_show_polygon_kmlname_input.setText('区域动画')
         self.right_bar_widget_show_polygon_kmlname_input.setPlaceholderText("输入要保存的文件名")
         self.right_bar_widget_show_polygon_kmlname_input.setObjectName('right_bar_widget_qlinedit_input')
 
-        # 省市区 是否子区域
+        # 区域渐显 动画方式 - 区域动画&形状变化动画
         self.right_bar_tour_show_polygon_type = QtWidgets.QLabel('动画方式')
         self.right_bar_tour_show_polygon_type.setObjectName("right_bar_tour_label")
         self.right_bar_tour_show_polygon_type_group_button = QtWidgets.QButtonGroup()  # 按钮分组
-        self.right_bar_tour_show_polygon_type_yes_button = QtWidgets.QRadioButton("区域渐显")
+        self.right_bar_tour_show_polygon_type_yes_button = QtWidgets.QRadioButton("区域动画")
         self.right_bar_tour_show_polygon_type_yes_button.setObjectName('right_bar_widget_qlinedit_input')
         self.right_bar_tour_show_polygon_type_yes_button.setChecked(True)
         self.right_bar_tour_show_polygon_type_no_button = QtWidgets.QRadioButton("形状变化")
         self.right_bar_tour_show_polygon_type_no_button.setObjectName('right_bar_widget_qlinedit_input')
-        # self.right_bar_tour_show_polygon_type_no_button.setEnabled(False)
-        # self.right_bar_tour_show_polygon_type_middle_button = QtWidgets.QRadioButton("播放变化")
-        # self.right_bar_tour_show_polygon_type_middle_button.setObjectName('right_bar_widget_qlinedit_input')
-        # self.right_bar_tour_show_polygon_type_middle_button.setEnabled(False)
         self.right_bar_tour_show_polygon_type_group_button.addButton(self.right_bar_tour_show_polygon_type_yes_button, 1)  # 设置ID为1
         self.right_bar_tour_show_polygon_type_group_button.addButton(self.right_bar_tour_show_polygon_type_no_button, 0)
-        # self.right_bar_tour_show_polygon_type_group_button.addButton(self.right_bar_tour_show_polygon_type_middle_button, 2)  # 设置ID为2
 
         self.right_bar_tour_show_polygon_time = QtWidgets.QLabel('时间')
         self.right_bar_tour_show_polygon_time.setObjectName("right_bar_tour_label")
@@ -737,6 +734,17 @@ class MainUi(QtWidgets.QMainWindow):
         self.right_bar_widget_show_polygon_time_input.setObjectName('right_bar_widget_qlinedit_input')
         self.right_bar_widget_show_polygon_time_input_holder = QtWidgets.QLabel("单个polygon时间")  # 提示栏
         self.right_bar_widget_show_polygon_time_input_holder.setObjectName("right_bar_widget_holder")
+
+        self.right_bar_tour_show_polygon_color = QtWidgets.QLabel('颜色&透明度')                # transparent
+        self.right_bar_tour_show_polygon_color.setObjectName("right_bar_tour_label")
+        self.right_bar_tour_show_polygon_color_input = QtWidgets.QPushButton("选择颜色")
+        self.right_bar_tour_show_polygon_color_transparent_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)  # 滑块框栏
+        self.right_bar_tour_show_polygon_color_transparent_slider.setMinimum(0)  # 设置最小值
+        self.right_bar_tour_show_polygon_color_transparent_slider.setMaximum(255)  # 设置最大值
+        self.right_bar_tour_show_polygon_color_transparent_slider.setSingleStep(1)  # 设置滑动步长
+        self.right_bar_tour_show_polygon_color_transparent_slider.setValue(150)
+        self.right_bar_tour_show_polygon_color_transparent_slider_holder_value = QtWidgets.QLabel("150")  # 提示文字
+        self.right_bar_tour_show_polygon_color_name = ''  # 颜色
 
         # 线路浏览 线路浏览 线路文件
         self.right_bar_tour_show_polygon_file = QtWidgets.QPushButton('上传文件')
@@ -752,24 +760,26 @@ class MainUi(QtWidgets.QMainWindow):
         self.right_bar_tour_show_polygon_file_button_download.setObjectName('right_bar_tour_button_download')
         self.right_bar_widget_show_polygon_file_placeholder = QtWidgets.QLabel("")  # 占位符
 
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon, 0, 0, 1, 1)  # (跨行的控件，起始行，起始列，跨越的行数，跨越列数)
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_kmlname, 0, 0, 4, 1)
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_kmlname_input, 0, 1, 4, 3)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon, 0, 0, 1, 1)  # 单独水平线
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_kmlname, 1, 0, 1, 1)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_kmlname_input, 1, 1, 1, 5)
 
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type, 1, 0, 4, 1)             #    是否包含子区域
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type_yes_button, 1, 1, 4, 3)  #    包含子区域
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type_no_button, 1, 2, 4, 3)   #    不包含子区域
-        # self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type_middle_button, 1, 3, 4, 3)   #    不包含子区域
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type, 2, 0, 1, 1)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type_yes_button, 2, 1, 1, 2)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_type_no_button, 2, 3, 1, 1)
 
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_time, 2, 0, 4, 1)  # 圆环饼图 经度 文字
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_time_input, 2, 1, 4, 3)  # 圆环饼图 经度 输入框
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_time_input_holder, 2, 4, 4, 2)  # 圆环饼图 经度 提示文字
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_color, 3, 0, 1, 1)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_color_input, 3, 1, 1, 1)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_color_transparent_slider, 3, 2, 1, 4)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_color_transparent_slider_holder_value,3, 6, 1, 6)
 
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_file, 3, 1, 4, 1)  # 线路浏览 上传文件 输入框
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_file_holder, 3, 2, 4, 2)  # 线路浏览 上传文件 提示文字
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_file_button_download, 4, 1, 4, 3)  # 线路浏览 上传文件 下载按钮
-        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_file_placeholder, 18, 2, 4, 3)  # 线路浏览 上传文件 占位符
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_time, 4, 0, 1, 1)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_time_input, 4, 1, 1, 2)
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_widget_show_polygon_time_input_holder, 4, 3, 1, 6)
 
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_file, 5, 1, 1, 2)  # 修改列索引为0
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_file_holder, 5, 3, 1, 2)  # 修改列索引为1，跨越列数为2
+        self.right_bar_polygon_show_layout.addWidget(self.right_bar_tour_show_polygon_file_button_download, 6, 1, 1, 2)  # 修改列索引为3
 
         # ======================右侧点击-省市县====================================================
         self.right_bar_polygon_widget = QtWidgets.QWidget()  # 右侧顶部搜索框部件
@@ -907,7 +917,10 @@ class MainUi(QtWidgets.QMainWindow):
 
         # ======================区域浮现 下载====================================================
         self.right_bar_tour_show_polygon_file.clicked.connect(self.right_bar_tour_show_polygon_file_slider_connect)
+        self.right_bar_tour_show_polygon_color_input.clicked.connect(self.right_bar_tour_show_polygon_color_input_connect)
         self.right_bar_tour_show_polygon_file_button_download.clicked.connect(self.on_tour_show_polygon_push_button_clicked)
+        self.right_bar_tour_show_polygon_color_transparent_slider.valueChanged.connect(self.right_bar_tour_show_polygon_color_transparent_slider_holder_connect)
+
 
         # ======================省市县区 下载====================================================
         self.right_bar_widget_polygon_province_input.activated.connect(self.on_tour_province_city_button_clicked)
@@ -1018,6 +1031,39 @@ class MainUi(QtWidgets.QMainWindow):
             self.right_bar_polygon_show_widget.show()
 
     # =========line===========区域变化=================================================
+
+    def right_bar_tour_show_polygon_color_input_connect(self):
+
+        colorDialog = QtWidgets.QColorDialog()
+        colorDialog.setOption(QtWidgets.QColorDialog.ShowAlphaChannel)  # 启用透明度选项
+        self.transparent_color = colorDialog.getColor()
+
+        if self.transparent_color.isValid():
+            # 处理选择的颜色
+            self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: {self.transparent_color.name()};")
+            self.right_bar_tour_show_polygon_color_input.setText("")
+            self.right_bar_tour_show_polygon_color_name = self.transparent_color.name()
+            # self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: {color.name()};")
+            # 将8位颜色和透明度应用于按钮的背景颜色
+            self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: rgba({self.transparent_color.red()}, {self.transparent_color.green()}, {self.transparent_color.blue()}, {self.right_bar_tour_show_polygon_color_transparent_slider.value()});")
+            print(f"background-color: rgba({self.transparent_color.red()}, {self.transparent_color.green()}, {self.transparent_color.blue()}, {self.right_bar_tour_show_polygon_color_transparent_slider.value()});")
+            self.right_bar_tour_show_polygon_color_name = simplekml.Color.changealphaint(self.right_bar_tour_show_polygon_color_transparent_slider.value(), simplekml.Color.rgb(self.transparent_color.red(), self.transparent_color.green(), self.transparent_color.blue()))
+
+
+
+    def right_bar_tour_show_polygon_color_transparent_slider_holder_connect(self):
+        try:
+            slider_transparent_value = self.right_bar_tour_show_polygon_color_transparent_slider.value()  # 获取当前滑块值
+            self.right_bar_tour_show_polygon_color_transparent_slider_holder_value.setText('%s°' % slider_transparent_value)
+            self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: rgba({self.transparent_color.red()}, {self.transparent_color.green()}, {self.transparent_color.blue()}, {self.right_bar_tour_show_polygon_color_transparent_slider.value()});")
+            self.right_bar_tour_show_polygon_color_name = simplekml.Color.changealphaint(
+                self.right_bar_tour_show_polygon_color_transparent_slider.value(),
+                simplekml.Color.rgb(self.transparent_color.red(), self.transparent_color.green(), self.transparent_color.blue())
+            )
+        except Exception as e:
+            traceback.print_exc()
+            QtWidgets.QMessageBox.warning(self, "提示", "请先选择颜色!")
+
     def right_bar_tour_show_polygon_file_slider_connect(self):
         try:
             filename = QtWidgets.QFileDialog.getOpenFileNames(self, '选择图像', UPLOAD_PATH, "All Files(*);;Text Files(*.txt)")
@@ -1034,13 +1080,12 @@ class MainUi(QtWidgets.QMainWindow):
         try:
 
             selected_id = self.right_bar_tour_show_polygon_type_group_button.checkedId()
-
-            print(selected_id)
             kmlname = self.right_bar_widget_show_polygon_kmlname_input.text()
             if selected_id == 1:
                 TourPolygonShow(kmlname).tour_polygon_linear(
                     kmlname=kmlname if kmlname else '',
                     tour_time=float(self.right_bar_widget_show_polygon_time_input.text()),
+                    poly_color=self.right_bar_tour_show_polygon_color_name,
                     polygon_coords=self.right_bar_tour_show_polygon_filepath_coords
                 )
             elif selected_id == 0:

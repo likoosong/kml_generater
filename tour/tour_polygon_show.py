@@ -22,7 +22,7 @@ class TourPolygonShow(object):
         # self.poly.linestyle.width = 2
         # self.poly.polystyle.color = '00ffffff'
 
-    def polygon_linear(self, poly_name, tour_time, coords):
+    def polygon_linear(self, poly_name, tour_time, poly_color, coords):
 
         pol = self.polygon_folder.newpolygon(name=poly_name, outerboundaryis=coords)
         # pol.style = self.poly
@@ -37,7 +37,7 @@ class TourPolygonShow(object):
         self.playlist.newgxwait(gxduration=1)
 
         animatedupdate = self.playlist.newgxanimatedupdate(gxduration=tour_time) # Line bf0000ff  Poly 4c0000ff
-        poly_color = f"{255:02x}{random.randint(0, 255):02x}{random.randint(0, 255):02x}{random.randint(0, 255):02x}"
+        # poly_color = f"{255:02x}{random.randint(0, 255):02x}{random.randint(0, 255):02x}{random.randint(0, 255):02x}"
         # <LineStyle><color>bf0000ff</color></LineStyle> self.poly.id
         animatedupdate.update.change = f"""
             <Style targetId="{pol.style.id}">
@@ -55,12 +55,12 @@ class TourPolygonShow(object):
                     </Style>
                 """
 
-    def tour_polygon_linear(self, kmlname, tour_time, polygon_coords):
+    def tour_polygon_linear(self, kmlname, tour_time, poly_color, polygon_coords):
 
         for idx, each in enumerate(polygon_coords):
             poly_name = each.get('poly_name')
             coords = each.get('coords')
-            self.polygon_linear(poly_name, tour_time, coords)
+            self.polygon_linear(poly_name, tour_time, poly_color, coords)
 
         self.play_playlist.newgxwait(gxduration=3)  # 控制长短
 
@@ -79,7 +79,3 @@ if __name__ == '__main__':
 
     show = TourPolygonShow(kmlname)
     show.tour_polygon_linear(kmlname, tour_time, polygon_coords)
-
-
-
-
