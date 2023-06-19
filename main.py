@@ -718,7 +718,7 @@ class MainUi(QtWidgets.QMainWindow):
         self.right_bar_tour_show_polygon_type = QtWidgets.QLabel('动画方式')
         self.right_bar_tour_show_polygon_type.setObjectName("right_bar_tour_label")
         self.right_bar_tour_show_polygon_type_group_button = QtWidgets.QButtonGroup()  # 按钮分组
-        self.right_bar_tour_show_polygon_type_yes_button = QtWidgets.QRadioButton("区域动画")
+        self.right_bar_tour_show_polygon_type_yes_button = QtWidgets.QRadioButton("区域渐显")
         self.right_bar_tour_show_polygon_type_yes_button.setObjectName('right_bar_widget_qlinedit_input')
         self.right_bar_tour_show_polygon_type_yes_button.setChecked(True)
         self.right_bar_tour_show_polygon_type_no_button = QtWidgets.QRadioButton("形状变化")
