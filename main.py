@@ -1043,12 +1043,10 @@ class MainUi(QtWidgets.QMainWindow):
             self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: {self.transparent_color.name()};")
             self.right_bar_tour_show_polygon_color_input.setText("")
             self.right_bar_tour_show_polygon_color_name = self.transparent_color.name()
-            # self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: {color.name()};")
             # 将8位颜色和透明度应用于按钮的背景颜色
             self.right_bar_tour_show_polygon_color_input.setStyleSheet(f"background-color: rgba({self.transparent_color.red()}, {self.transparent_color.green()}, {self.transparent_color.blue()}, {self.right_bar_tour_show_polygon_color_transparent_slider.value()});")
             print(f"background-color: rgba({self.transparent_color.red()}, {self.transparent_color.green()}, {self.transparent_color.blue()}, {self.right_bar_tour_show_polygon_color_transparent_slider.value()});")
             self.right_bar_tour_show_polygon_color_name = simplekml.Color.changealphaint(self.right_bar_tour_show_polygon_color_transparent_slider.value(), simplekml.Color.rgb(self.transparent_color.red(), self.transparent_color.green(), self.transparent_color.blue()))
-
 
 
     def right_bar_tour_show_polygon_color_transparent_slider_holder_connect(self):
