@@ -1,3 +1,9 @@
+# Google Earth 地图动画生成器
+
+本程序写给：自驾旅行、地理爱好者、历史地图爱好者
+
+我的B站账号：https://space.bilibili.com/153276950
+
 #### 一、KML generater 
 
 - 运行
@@ -13,13 +19,37 @@
 
 #### 二、功能介绍
 
+![feature](./image/feature.png)
 
-<iframe src="//player.bilibili.com/player.html?aid=612801653&bvid=BV1ph4y1p7Hq&cid=1105709938&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+- **坐标浏览：**
+
+  [环绕浏览](https://www.bilibili.com/video/BV1Ga411f7Yn)：生成在自定义高度，环绕一周观察某一建筑、山体等动画
+
+  四顾浏览：生成在自定义高度，观察周围一周的建筑、山体等自然景观的动画
+
+  [缩时环景](https://www.bilibili.com/video/BV13V4y197iR)：生成当天太阳的日出、日中、日落；晚上都转星移的动画
+
+  [圆饼环图](https://www.bilibili.com/video/BV1A44y1d7Ky)：以某一坐标为原点，生成圆形、环形、饼形的地图
+
+- **线路浏览**: 生成线路的生长动画，动画中支持[模型](https://www.bilibili.com/video/BV1Sh4y1J7hU)与图片的移动
+
+  | 路线类型 | 视角类型 | 类型支持       | 
+  | -------- | -------- | -------------- | 
+  | 生长路线 | 固定视角 | 图片/模型(dae) |   
+  | 生长路线 | 环绕视角 | 图片/模型(dae) |   
+  | 生长路线 | 跟随视角 | 图片/模型(dae) |   
+  | ...         |    ...      |      ...          |     
+
+- **多边形区域**
+
+  省市县区: 生成国界、省界、市区、区县的地图；区域可选是否包含子区域，是否填充颜色等
+
+  [区域渐显](https://www.bilibili.com/video/BV1124y1c7DJ): 生成一个或多个polygon图形逐渐显示的地图动画，颜色、透明度与单个polygon线上时间均能自定义
+
+  [形状变化](https://www.bilibili.com/video/BV1Rz4y1Y7Ys): 支持生成一个或多个polygon图形逐渐显示的地图动画
 
 
-
-
-#### 三、更新迭代
+#### 三、迭代记录
 
 ```
 2022-11-29：新增动态浏览模块，包括四顾浏览和环绕浏览功能。
@@ -34,65 +64,36 @@
 2023-04-22：新增区域渐显功能。
 2023-05-01：新增区域形状的动态演化功能。
 2023-05-29：新增线路浏览（生长路线-跟随视角）功能，支持模型移动，并优化了kml文件的大小。
+2023-06-20：功能迭代-区域动画的区域渐显功能增加颜色选择器与颜色透明度功能
 ```
 
+#### 四、其他提示
 
+- 本生成器生成的地图动画仅支持Google Earth; 
+-  [B站教程](https://space.bilibili.com/153276950) 与QQ群号: 708329713
+- 本着互联网的开源精神，本生成器为开源免费的软件
+- 本生成器仅仅供学习交流使用，请遵守当地法律法规
 
-重要提示：具体操作可关注哔哩哔哩
-哔哩哔哩教程: https://space.bilibili.com/153276950
-QQ群号: 708329713
-主要功能：生成动画仅支持Google Earth Pro
-- 点：环绕浏览、四顾浏览、圆环饼图
-- 线：固定视角生长、环绕视角生长、跟随视角生长
-- 面：生成省市县的地图，区域动态变化
+#### 五、相关问题
 
-严禁售卖，开源免费
-下载位置：
-- 点击下载后，生成的文件一般会保存在桌面上。
-- 如果找不到桌面上的文件，请查找以下目录：
+- 你进行导入kml文件，选填相应配置后，点击下载桌面会生成kmlfile文件夹将其内的kml文件拖入谷歌地图即可
+
+    ```
     Windows：C:\Users\用户名\Desktop\kmlfile
-             找不到的话，试试这个目录：C:\Users\Administrator\Desktop\kmlfile
-    Mac：/Users/用户名/Desktop/kmlfile
+    Mac：    /Users/用户名/Desktop/kmlfile
+    ```
 
-1. 线路的模型动画需要在kmlfile目录下创建一个名为"mode"的文件夹，并将您的dae文件命名为"car.dae"，即可运行。测试奥迪模型由零拾ZeroTen提供，感谢
+- 如找不到桌面kmlfile文件夹，请查找以下目录:
 
+    ```
+    原因：可能是由于你修改系统盘的位置不到kmlfile文件夹
+    方案一：在以下目录查找 C:\Users\Administrator\Desktop\kmlfile
+    方案二：利用Everything软件搜索一下kmlfile文件夹 
+    ```
 
+- 线路浏览动画相关:
 
-强调：具体操作可关注哔哩哔哩
-哔哩哔哩教程: https://space.bilibili.com/153276950
-QQ群号:708329713
+    线路浏览动画的模型的移动：请在kmlfile目录下创建一个名为"mode"的文件夹，并将你的dae文件命名为"car.dae" 即可
 
-
-
-主要功能：生成动画仅支持某歌earthpro
-	点: 环绕浏览、四顾浏览、圆环饼图
-	线: 固定视角生长、环绕视角生长、跟随视角生长
-	面：省市县的生成、区域的动态变化
-
-
-严禁售卖，开源免费 
-下载那里查找
-	点击下载，生成的文件路径地址一般在桌面
-	如果桌面没有，则在下面目录下查找
-	windows： C:\Users\用户名\Desktop\kmlfile
-                  找不到看这个文件夹： C:\Users\Administrator\Desktop\kmlfile
-	Mac：     /Users/用户名/Desktop/kmlfile
-
-
-
-1.线路的模型动画，需要在kmlfile种新建mode文件夹，并将你的dae文件命名为car.dae即可运行
-  测试奥迪模型由 零拾ZeroTen提供，感谢零拾ZeroTen
-
-
-
-
-
-
-
-
-
-
-
-
-
+    测试奥迪模型由零拾ZeroTen提供，感谢零拾ZeroTen
 
