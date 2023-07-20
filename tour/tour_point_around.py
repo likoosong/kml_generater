@@ -3,6 +3,7 @@ import math
 from datetime import datetime
 
 import simplekml
+from simplekml import Kml
 from polycircles import polycircles
 
 from settings.constant import FILEPATH
@@ -10,8 +11,8 @@ from settings.constant import FILEPATH
 
 class TourPointAround(object):
 
-    def __init__(self):
-        self.kml = simplekml.Kml()
+    def __init__(self, name):
+        self.kml = Kml(name=name)
 
     def parser_coordinate_point(self, latitude, longitude, radius):
         """
@@ -87,11 +88,7 @@ class TourPointAround(object):
                 flyto.camera.altitudemode = simplekml.AltitudeMode.absolute
                 flyto.gxflytomode = 'smooth'
 
-
-
-            # self.kml.newpoint(name=f"{heading}", coords=[(lon, lat)])
-
-        self.kml.newpoint(name=f"{kmlname}", coords=[(longitude, latitude)])
+        # self.kml.newpoint(name=f"{kmlname}", coords=[(longitude, latitude)])
 
     def tour_point_around(self, kmlname, longitude, latitude, altitude, horizfov, tilt=60,  heading=0, radius=20, tour_time=30, roll=0, clock=True):
 

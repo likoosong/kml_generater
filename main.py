@@ -1302,8 +1302,9 @@ class MainUi(QtWidgets.QMainWindow):
         :return:
         """
         try:
-            TourPointAround().tour_point_around(
-                kmlname=self.right_bar_widget_point_around_kmlname_input.text(),
+            kmlname = self.right_bar_widget_point_around_kmlname_input.text()
+            TourPointAround(kmlname).tour_point_around(
+                kmlname=kmlname,
                 longitude=float(self.right_bar_widget_point_around_longitude_input.text()),  # 经度
                 latitude=float(self.right_bar_widget_point_around_latitude_input.text()),  # 纬度
                 altitude=self.right_bar_widget_point_around_altitude_input.text(),  # 实际:467.9   高度 1.67 倍
