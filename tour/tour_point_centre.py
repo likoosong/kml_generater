@@ -28,10 +28,6 @@ class TourPointCentre:
             if idx == 0:
                 playlist.newgxwait(gxduration=1)
 
-
-
-
-        self.kml.newpoint(name=f"{kmlname}", coords=[(longitude, latitude)])
         wono = datetime.now().strftime('%Y%m%d%H%M%S')
         self.kml.save(f"{FILEPATH}{wono}{kmlname}.kml")
 
