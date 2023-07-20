@@ -1384,10 +1384,10 @@ class MainUi(QtWidgets.QMainWindow):
             "tour_time": self.right_bar_widget_point_tour_time_input.text(),
             "clock": 1 if self.right_bar_tour_point_clock_wise_button.isChecked() else 0
         }
-        print(data)
         try:
-            TourPointCentre().tour_point_centre(
-                kmlname=self.right_bar_widget_point_kmlname_input.text(),
+            kmlname = self.right_bar_widget_point_kmlname_input.text()
+            TourPointCentre(kmlname).tour_point_centre(
+                kmlname=kmlname,
                 longitude=self.right_bar_widget_point_longitude_input.text(),  # 经度
                 latitude=self.right_bar_widget_point_latitude_input.text(),  # 纬度
                 altitude=self.right_bar_widget_point_altitude_input.text(),  # 实际:467.9   高度 1.67 倍

@@ -6,8 +6,8 @@ from settings.constant import FILEPATH
 
 class TourPointCentre:
 
-    def __init__(self):
-        self.kml = simplekml.Kml()
+    def __init__(self, name):
+        self.kml = simplekml.Kml(name=name)
 
     def tour_point_centre(self, kmlname, longitude, latitude, altitude, tilt, tour_time, clock=1):
 
