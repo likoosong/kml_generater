@@ -178,6 +178,7 @@ if __name__ == '__main__':
         （如果距离较远且 <tilt> 等于 90°，则可能根本看不到地球表面。）本人理解地球水平倾斜角度
         <roll>0</roll>
         y轴指向北并与经线平行，x 轴指向东并与纬线平行 不会变
+        gxhorizfov 看的范围更宽 
         <altitudeMode>absolute</altitudeMode>
     </Camera>
 </gx:FlyTo>
