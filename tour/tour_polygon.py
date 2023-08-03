@@ -77,13 +77,16 @@ class TourPolygon(object):
         each = boundary["features"][0]
         name = each.get("properties")["name"]
         center = each.get("properties")["center"]
+        geometry_type = each.get("geometry")["type"]
         coordinates = each.get("geometry")["coordinates"]
         r, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
 
         fol = self.kml.newfolder(name='polygon')
         for idx, coords in enumerate(coordinates):
-            coords = coords[0]
-            print(coords)
+            if geometry_type == "Polygon":
+                coords = coords
+            elif geometry_type == "MultiPolygon":
+                coords = coords[0]
             if color:
                 pol = fol.newpolygon(name=f"line-{idx}")
                 pol.outerboundaryis = coords

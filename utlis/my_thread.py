@@ -38,7 +38,6 @@ class ThreadLine(QThread):    # 建立一个任务线程类
         :param coords: 坐标集合
         :return:
         """
-        print()
         if self.tour_type == "生长路线-固定视角":  # 生长路线-固定视角
             TourLineFix(self.kmlname).tour_line_costom(self.kmlname, self.coords, tour_time=self.tour_time)
         elif self.tour_type == "生长路线-环绕视角":  # 生长路线-固定视角
@@ -110,27 +109,20 @@ class ThreadPolygon(QThread):    # 建立一个任务线程类
         print(kmlname,'children',  self.children, 'color', self.color)
 
         area = LuckyAreas.get(area_name=kmlname)
-        adcode = area.adcode
-        level = area.level
         tour = TourPolygon()
         if self.province == '请选择' and self.color == 0:
             print("没有填充的中国边界包含省界(页面不点击 全部是请选择)")
             url = 'https://geo.datav.aliyun.com/areas_v3/bound/100000_boundary.json'
-            print(url)
             boundary = requests.get(url).json()
             tour.china_polygon_boundary(kmlname, boundary, children=self.children)
-        elif (self.children == 0 and level == 'district') or (self.town != '请选择' and level == 'district') or (self.children == 1 and level == 'district'):
+        # elif (self.children == 0 and level == 'district') or (self.town != '请选择' and area.level == 'district') or (self.children == 1 and area.level == 'district'):
+        elif self.children == 0:
             print("不包含子区域或者没有子区域  即单个地区的kml ")
             url = f'https://geo.datav.aliyun.com/areas_v3/bound/{area.adcode}.json'  # 141081
-            print(url)
             boundary = requests.get(url).json()
             TourPolygon().china_single_polygon(kmlname, boundary, color=self.color)
-
-
         elif self.children == 1:
             # 生成包含自取的kml 即多个地区的kml
             url = f'https://geo.datav.aliyun.com/areas_v3/bound/{area.adcode}_full.json'
-            print(url)
             boundary = requests.get(url).json()
             tour.china_full_polygon(kmlname, boundary, color=self.color)
-
