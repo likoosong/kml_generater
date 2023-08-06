@@ -88,8 +88,6 @@ class TourPointAround(object):
                 flyto.camera.altitudemode = simplekml.AltitudeMode.absolute
                 flyto.gxflytomode = 'smooth'
 
-        # self.kml.newpoint(name=f"{kmlname}", coords=[(longitude, latitude)])
-
     def tour_point_around(self, kmlname, longitude, latitude, altitude, horizfov, tilt=60,  heading=0, radius=20, tour_time=30, roll=0, clock=True):
 
         coordinate = self.parser_coordinate_point(latitude, longitude, radius)
