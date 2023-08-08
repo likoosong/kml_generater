@@ -61,7 +61,7 @@ class PointCenterView(QtWidgets.QWidget):
         self.right_bar_widget_point_radius_input.setText('781')
         # self.right_bar_widget_point_radius_input.setPlaceholderText("环绕半径  Radius")
         self.right_bar_widget_point_radius_input.setObjectName('right_bar_widget_qlinedit_input')
-        self.right_bar_widget_point_radius_input_holder = QtWidgets.QLabel("建議值為高度的1.67倍 , 0 表為環景")  # 提示文字
+        self.right_bar_widget_point_radius_input_holder = QtWidgets.QLabel("建议值为高度的1.67倍 , 0 表為環景")  # 提示文字
         self.right_bar_widget_point_radius_input_holder.setObjectName("right_bar_widget_holder")
 
         # 環繞視點高度 Height
@@ -69,13 +69,13 @@ class PointCenterView(QtWidgets.QWidget):
         self.right_bar_tour_point_altitude.setObjectName("right_bar_tour_label")
         self.right_bar_widget_point_altitude_input = QtWidgets.QLineEdit()  # 输入框栏
         self.right_bar_widget_point_altitude_input.setText('702')
-        self.right_bar_widget_point_altitude_input.setPlaceholderText("建議值為高度的1.5倍")
+        self.right_bar_widget_point_altitude_input.setPlaceholderText("建议值为高度的1.5倍")
         self.right_bar_widget_point_altitude_input.setObjectName('right_bar_widget_qlinedit_input')
-        self.right_bar_widget_point_altitude_input_holder = QtWidgets.QLabel("建議值為高度的1.5倍")  # 提示文字
+        self.right_bar_widget_point_altitude_input_holder = QtWidgets.QLabel("建议值为高度的1.5倍")  # 提示文字
         self.right_bar_widget_point_altitude_input_holder.setObjectName("right_bar_widget_holder")
 
         # 環繞視野角度
-        self.right_bar_tour_point_horizfov = QtWidgets.QLabel('視野角度  Horizfov')  # 文字栏
+        self.right_bar_tour_point_horizfov = QtWidgets.QLabel('视野角度  Horizfov')  # 文字栏
         self.right_bar_tour_point_horizfov.setObjectName("right_bar_tour_label")
         self.right_bar_widget_point_horizfov_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)  # 滑块框栏
         # self.right_bar_widget_point_horizfov_slider.setObjectName('right_bar_widget_qlinedit_input')
@@ -86,7 +86,7 @@ class PointCenterView(QtWidgets.QWidget):
         self.right_bar_widget_point_horizfov_slider_value = QtWidgets.QLabel("60°")  # 提示文字
 
         # 環繞傾斜角度 Tilt
-        self.right_bar_tour_point_tilt = QtWidgets.QLabel('傾斜角度  Tilt')
+        self.right_bar_tour_point_tilt = QtWidgets.QLabel('倾斜角度  Tilt')
         self.right_bar_tour_point_tilt.setObjectName("right_bar_tour_label")
         self.right_bar_widget_point_tilt_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)  # 滑块框栏
         self.right_bar_widget_point_tilt_slider.setObjectName('right_bar_widget_qlinedit_input')
@@ -95,7 +95,7 @@ class PointCenterView(QtWidgets.QWidget):
         self.right_bar_widget_point_tilt_slider.setSingleStep(1)  # 设置滑动步长
         self.right_bar_widget_point_tilt_slider.setValue(60)  # 设置当前值
         self.right_bar_widget_point_tilt_slider_value = QtWidgets.QLabel("60°")  # 提示文字
-        self.right_bar_widget_point_tilt_slider_holder = QtWidgets.QLabel("0°為正射，90°為水平")  # 提示文字
+        self.right_bar_widget_point_tilt_slider_holder = QtWidgets.QLabel("0°为正射，90°为水平")  # 提示文字
         self.right_bar_widget_point_tilt_slider_holder.setObjectName("right_bar_widget_holder")
 
         # 環繞 啟始方向 Ring Around Start Direction: -180° <--> 180°
