@@ -69,13 +69,4 @@ class TourPolygonShow(object):
 
 
 if __name__ == '__main__':
-
-
     kmlname = 'wwwwwww'
-
-    from utlis.t import aaaa as polygon_coords
-
-    tour_time = 1
-
-    show = TourPolygonShow(kmlname)
-    show.tour_polygon_linear(kmlname, tour_time, polygon_coords)

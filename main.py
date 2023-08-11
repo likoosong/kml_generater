@@ -5,7 +5,7 @@ import traceback
 
 import simplekml
 import qtawesome
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, QtSvg
 from PyQt5.QtGui import QColor
 from pyqt_toast import Toast
 
@@ -18,6 +18,8 @@ from view.point_ring_interface import PointRingView
 from view.line_tour_interface import LineTourView
 from view.polygon_region_interface import PolygonRegionView
 from view.polygon_change_interface import PolygonChangeView
+from view.polygon_latlonaltbox_interface import PolygonLatLonaltBoxView
+from view.polygon_show_hide_interface import PolygonShowHideView
 
 class MainUi(QtWidgets.QMainWindow):
     def __init__(self):
@@ -72,21 +74,27 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_label_4 = QtWidgets.QPushButton("联系与帮助")
         self.left_label_4.setObjectName('left_label')
 
-        self.left_button_1 = QtWidgets.QPushButton(qtawesome.icon('fa.sellsy', color='white'), "环绕浏览")
+        self.left_button_1 = QtWidgets.QPushButton(qtawesome.icon('fa.envira', color='white'), "环绕浏览")
         self.left_button_1.setObjectName('left_button')
-        self.left_button_2 = QtWidgets.QPushButton(qtawesome.icon('fa.music', color='white'), "四顾浏览")
+        self.left_button_2 = QtWidgets.QPushButton(qtawesome.icon('fa.circle-o', color='white'), "四顾浏览")
         self.left_button_2.setObjectName('left_button')
-        self.left_button_3 = QtWidgets.QPushButton(qtawesome.icon('fa.sellsy', color='white'), "缩时环景")
+        self.left_button_3 = QtWidgets.QPushButton(qtawesome.icon('fa.clock-o', color='white'), "缩时环景")
         self.left_button_3.setObjectName('left_button')
-        self.left_button_4 = QtWidgets.QPushButton(qtawesome.icon('fa.film', color='white'), "圆饼环图")
+        self.left_button_4 = QtWidgets.QPushButton(qtawesome.icon('fa.eercast', color='white'), "圆饼环图")
         self.left_button_4.setObjectName('left_button')
-        self.left_button_5 = QtWidgets.QPushButton(qtawesome.icon('fa.home', color='white'), "线路浏览")
+        self.left_button_5 = QtWidgets.QPushButton(qtawesome.icon('fa.cab', color='white'), "线路浏览")
         self.left_button_5.setObjectName('left_button')
 
-        self.left_button_6 = QtWidgets.QPushButton(qtawesome.icon('fa.comment', color='white'), "省市县区")
+        self.left_button_6 = QtWidgets.QPushButton(qtawesome.icon('fa.grav', color='white'), "省市县区")
         self.left_button_6.setObjectName('left_button')
-        self.left_button_7 = QtWidgets.QPushButton(qtawesome.icon('fa.download', color='white'), "区域动画")
+        self.left_button_7 = QtWidgets.QPushButton(qtawesome.icon('fa.download', color='white'), "形状变化")
         self.left_button_7.setObjectName('left_button')
+        # <i class="fa-duotone fa-person-fairy"></i>
+        self.left_button_11 = QtWidgets.QPushButton(qtawesome.icon('fa.vimeo', color='white'), "显示隐藏")
+        self.left_button_11.setObjectName('left_button')
+        self.left_button_10 = QtWidgets.QPushButton(qtawesome.icon('fa.xing-square', color='white'), "区域显示")
+        self.left_button_10.setObjectName('left_button')
+
         self.left_button_8 = QtWidgets.QPushButton(qtawesome.icon('fa.star', color='white'), "关注我们")
         self.left_button_8.setObjectName('left_button')
         self.left_button_9 = QtWidgets.QPushButton(qtawesome.icon('fa.question', color='white'), "遇到问题")
@@ -107,11 +115,13 @@ class MainUi(QtWidgets.QMainWindow):
 
         self.left_layout.addWidget(self.left_label_3, 8, 0, 1, 3)  # 一级标题 多变区域
         self.left_layout.addWidget(self.left_button_6, 9, 0, 1, 3)  # 二级标题 省市县区
-        self.left_layout.addWidget(self.left_button_7, 10, 0, 1, 3)  # 二级标题 区域渐显
+        self.left_layout.addWidget(self.left_button_7, 10, 0, 1, 3)  # 二级标题 形状变化
+        self.left_layout.addWidget(self.left_button_11, 11, 0, 1, 3)  # 二级标题 显示隐藏
+        self.left_layout.addWidget(self.left_button_10, 12, 0, 1, 3)  # 二级标题 区域渐显
 
-        self.left_layout.addWidget(self.left_label_4, 11, 0, 1, 3)  # 一级标题 联系与帮助
-        self.left_layout.addWidget(self.left_button_8, 12, 0, 1, 3)  # 二级标题 省市县区
-        self.left_layout.addWidget(self.left_button_9, 13, 0, 1, 3)  # 二级标题 省市县区
+        self.left_layout.addWidget(self.left_label_4, 13, 0, 1, 3)  # 一级标题 联系与帮助
+        self.left_layout.addWidget(self.left_button_8, 14, 0, 1, 3)  # 二级标题 省市县区
+        self.left_layout.addWidget(self.left_button_9, 15, 0, 1, 3)  # 二级标题 省市县区
 
         self.right_widget.addWidget(PointCenterView())
         self.right_widget.addWidget(PointAroundView())
@@ -120,6 +130,8 @@ class MainUi(QtWidgets.QMainWindow):
         self.right_widget.addWidget(LineTourView())
         self.right_widget.addWidget(PolygonRegionView())
         self.right_widget.addWidget(PolygonChangeView())
+        self.right_widget.addWidget(PolygonShowHideView())
+        self.right_widget.addWidget(PolygonLatLonaltBoxView())
 
         # ======================右侧表格的样式=== ========================================================
         self.left_widget.setStyleSheet(LEFT_WIDGET_STYLE_SHEET)        # 主界面 - 左侧导航栏样式
@@ -137,6 +149,11 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_button_5.clicked.connect(lambda: self.switch_to_subpage(4))   # 线路浏览
         self.left_button_6.clicked.connect(lambda: self.switch_to_subpage(5))   # 行政区域
         self.left_button_7.clicked.connect(lambda: self.switch_to_subpage(6))   # 区域动画
+        self.left_button_11.clicked.connect(lambda: self.switch_to_subpage(7))   # 显示隐藏(相机)
+        self.left_button_10.clicked.connect(lambda: self.switch_to_subpage(8))  # 显示隐藏(非相机)
+
+        self.left_button_8.clicked.connect(self.open_webpage)  # 连接到open_webpage方法
+
 
         self.switch_to_subpage(1)  # Call switch_to_subpage directly to show Subpage 1
         self.main_layout.setSpacing(0)  # 设置网格布局层中部件的间隙
@@ -146,6 +163,11 @@ class MainUi(QtWidgets.QMainWindow):
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)  # 设置窗口背景透明
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)  # 隐藏边框
 
+
+    def open_webpage(self):
+        # 打开特定的URL
+
+        QtGui.QDesktopServices.openUrl(QtCore.QUrl('https://space.bilibili.com/153276950'))
 
     def switch_to_subpage(self, index):
         print(index, '='*100)

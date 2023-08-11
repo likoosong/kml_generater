@@ -1,6 +1,51 @@
 import json
 from lxml import etree
 from geopy.distance import geodesic, great_circle
+from lxml import etree
+
+def hex_to_rgba(hex_color):
+    if len(hex_color) != 8:
+        raise ValueError("颜色代码长度必须为8个字符")
+
+    alpha = int(hex_color[0:2], 16)
+    red = int(hex_color[2:4], 16)
+    green = int(hex_color[4:6], 16)
+    blue = int(hex_color[6:8], 16)
+    return [red, green, blue, alpha]
+
+def parser_polygon_show_hide_coords(xml_name):
+    tree = etree.parse(xml_name)
+    namespaces = {'kml': 'http://www.opengis.net/kml/2.2'}
+    # 使用XPath找到所有包含Polygon子元素的Placemark元素中的styleUrl元素
+    style_urls = tree.xpath('//kml:Placemark[kml:Polygon]/kml:styleUrl', namespaces=namespaces)
+
+    polygons = []
+    for idx, style_url in enumerate(style_urls):
+        style_id = style_url.text[1:]  # 移除哈希字符'#'
+        poly_color = tree.xpath(f'//kml:Style[@id="{style_id}"]//kml:PolyStyle//kml:color', namespaces=namespaces)
+        if poly_color:
+            poly_color = poly_color[0]
+        else:
+            style_map_urls = tree.xpath(f'//kml:StyleMap[@id="{style_id}"]//kml:Pair//kml:styleUrl', namespaces=namespaces)
+            for style_map in style_map_urls:
+                style_map_id = style_map.text[1:]  # 移除哈希字符'#'
+                poly_color = tree.xpath(f'//kml:Style[@id="{style_map_id}"]//kml:PolyStyle//kml:color', namespaces=namespaces)
+                if poly_color:
+                    poly_color = poly_color[0]
+                    continue
+
+        poly_name = style_url.xpath('../kml:name', namespaces=namespaces)[0]
+        # 获取同级别的Polygon中的coordinates
+        coordinates_element = style_url.xpath('../kml:Polygon//kml:coordinates', namespaces=namespaces)[0]
+        coords = []
+        for point in coordinates_element.text.split(' '):
+            point = point.strip()
+            if not point:
+                continue
+            coords.append(point.split(','))
+        polygons.append({'poly_name': poly_name.text, 'poly_color': poly_color.text, 'coordinates': coords})
+    return polygons
+
 
 def parser_polygon_coords(xml_name):
 
