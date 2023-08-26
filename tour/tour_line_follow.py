@@ -127,6 +127,7 @@ class TourLineFollow(object):
                 flyto.lookat.heading = 0
                 flyto.lookat.range = distance / 3
                 # flyto.lookat.AltitudeMode = 'relativeToGround'
+                self.playlist.newgxwait(gxduration=1)
                 flyto = self.playlist.newgxflyto(gxduration=3)
                 flyto.gxflytomode = 'smooth'
                 flyto.lookat.longitude = coords[int(length // 1.7)][0]  # center_lon
