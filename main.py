@@ -20,6 +20,7 @@ from view.polygon_region_interface import PolygonRegionView
 from view.polygon_change_interface import PolygonChangeView
 from view.polygon_latlonaltbox_interface import PolygonLatLonaltBoxView
 from view.polygon_show_hide_interface import PolygonShowHideView
+from view.follow_me_interface import FollowMeView
 
 class MainUi(QtWidgets.QMainWindow):
     def __init__(self):
@@ -119,8 +120,8 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_layout.addWidget(self.left_button_11, 11, 0, 1, 3)  # 二级标题 显示隐藏
         self.left_layout.addWidget(self.left_button_10, 12, 0, 1, 3)  # 二级标题 区域渐显
 
-        self.left_layout.addWidget(self.left_label_4, 13, 0, 1, 3)  # 一级标题 联系与帮助
-        self.left_layout.addWidget(self.left_button_8, 14, 0, 1, 3)  # 二级标题 省市县区
+        self.left_layout.addWidget(self.left_label_4, 13, 0, 1, 3)   # 一级标题 联系与帮助
+        self.left_layout.addWidget(self.left_button_8, 14, 0, 1, 3)  # 二级标题 关注我们
         self.left_layout.addWidget(self.left_button_9, 15, 0, 1, 3)  # 二级标题 省市县区
 
         self.right_widget.addWidget(PointCenterView())
@@ -132,6 +133,7 @@ class MainUi(QtWidgets.QMainWindow):
         self.right_widget.addWidget(PolygonChangeView())
         self.right_widget.addWidget(PolygonShowHideView())
         self.right_widget.addWidget(PolygonLatLonaltBoxView())
+        self.right_widget.addWidget(FollowMeView())
 
         # ======================右侧表格的样式=== ========================================================
         self.left_widget.setStyleSheet(LEFT_WIDGET_STYLE_SHEET)        # 主界面 - 左侧导航栏样式
@@ -149,11 +151,11 @@ class MainUi(QtWidgets.QMainWindow):
         self.left_button_5.clicked.connect(lambda: self.switch_to_subpage(4))   # 线路浏览
         self.left_button_6.clicked.connect(lambda: self.switch_to_subpage(5))   # 行政区域
         self.left_button_7.clicked.connect(lambda: self.switch_to_subpage(6))   # 区域动画
-        self.left_button_11.clicked.connect(lambda: self.switch_to_subpage(7))   # 显示隐藏(相机)
+        self.left_button_11.clicked.connect(lambda: self.switch_to_subpage(7))  # 显示隐藏(相机)
         self.left_button_10.clicked.connect(lambda: self.switch_to_subpage(8))  # 显示隐藏(非相机)
+        self.left_button_8.clicked.connect(lambda: self.switch_to_subpage(9))   # 关于我们
 
-        self.left_button_8.clicked.connect(self.open_webpage)  # 连接到open_webpage方法
-
+        self.left_button_9.clicked.connect(self.open_webpage)  # 连接到open_webpage方法
 
         self.switch_to_subpage(1)  # Call switch_to_subpage directly to show Subpage 1
         self.main_layout.setSpacing(0)  # 设置网格布局层中部件的间隙
