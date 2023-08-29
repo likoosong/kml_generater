@@ -35,6 +35,30 @@ class LuckyAreas(BaseModel):
         table_name = 'lucky_areas'
 
 
+class BilibiliUser(BaseModel):
+    id = BigAutoField(primary_key=True)
+    nickname = CharField(max_length=255, null=True, collation='utf8mb4_general_ci')
+    mid = CharField(max_length=255, null=True, collation='utf8mb4_general_ci')
+    sex = CharField(max_length=255, null=True, collation='utf8mb4_general_ci')
+    face = CharField(max_length=255, null=True, collation='utf8mb4_general_ci')
+    fans = BigIntegerField(null=True)
+    friend = BigIntegerField(null=True)
+    attention = BigIntegerField(null=True)
+    likes = BigIntegerField(null=True)
+    video = BigIntegerField(null=True)
+    archive = BigIntegerField(null=True)
+
+    class Meta:
+        table_name = 'bilibili_user'
+
+
+class Proverb(BaseModel):
+    id = AutoField()
+    left = CharField(max_length=255, null=True, collation='utf8mb4_bin')
+    right = CharField(max_length=255, null=True, collation='utf8mb4_bin')
+    type = IntegerField(null=True)
+    class Meta:
+        table_name = 'proverb'
 
 if __name__ == '__main__':
 

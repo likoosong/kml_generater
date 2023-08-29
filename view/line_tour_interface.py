@@ -1,6 +1,8 @@
 import traceback
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from utlis.util import random_content
+from utlis.show_toast_interface import Toast, AlertLevel
 from settings.constant import UPLOAD_PATH, EXPIRED_DATE, EXPIRED_WARN
 from utlis.my_thread import ThreadLine, ThreadPolygon
 from utlis.parser_line_coords import parser_line_coords, parser_line_distance, parser_polygon_coords
@@ -102,8 +104,12 @@ class LineTourView(QtWidgets.QWidget):
             self.right_bar_tour_line_filepath_length, self.right_bar_tour_line_filepath_distance = parser_line_distance(self.right_bar_tour_line_filepath_coords)
 
         except Exception as e:
-            traceback.print_exc()
-            QtWidgets.QMessageBox.warning(self, "提示", "上传文件不正确!")
+            toast = Toast(title="提示", content="上传文件不正确!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
 
     def on_tour_line_file_push_button_clicked(self):
         """
@@ -111,7 +117,12 @@ class LineTourView(QtWidgets.QWidget):
         """
         print(self.right_bar_tour_line_flag_yes_button.isChecked())
         if self.right_bar_tour_line_filepath_coords is None:
-            QtWidgets.QMessageBox.warning(self, "提示", "请选择上传文件!")
+            toast = Toast(title="提示", content="请选择上传文件!", level=AlertLevel.WARNING, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         else:
             self.right_bar_tour_line_file_button_download.setEnabled(False)  # 按钮不可点击
             self.thread_line = ThreadLine(
@@ -127,8 +138,19 @@ class LineTourView(QtWidgets.QWidget):
             self.thread_line.start()
 
     def right_bar_tour_line_download_success(self, status):
+
         if status:
-            QtWidgets.QMessageBox.information(self, "提示", "下载成功！")
+            toast = Toast(title="下载成功", content=random_content(), level=AlertLevel.SUCCESS, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         else:
-            QtWidgets.QMessageBox.warning(self, "提示", "下载失败！")
+            toast = Toast(title="提示", content="下载失败!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         self.right_bar_tour_line_file_button_download.setEnabled(True)  # 按钮可点击

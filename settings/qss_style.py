@@ -89,7 +89,7 @@ RIGHT_WIDGET_STYLE_SHEET = '''
             height:30px;
             border-radius: 4px;
             border: 1px solid gray;
-            font-color: red;
+            color: red;
             font-size:16px;
             font-weight:1000;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
