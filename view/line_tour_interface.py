@@ -1,3 +1,4 @@
+import os
 import traceback
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -79,13 +80,11 @@ class LineTourView(QtWidgets.QWidget):
         self.right_bar_line_layout.addWidget(self.right_bar_tour_line_flag_yes_button, 2, 2, 4, 3)  # 图片
         self.right_bar_line_layout.addWidget(self.right_bar_tour_line_tour_time, 3, 0, 4, 1)  # 线路浏览 时间 文字
         self.right_bar_line_layout.addWidget(self.right_bar_widget_line_tour_time_input, 3, 1, 4, 3)  # 线路浏览 时间 输入框
-        self.right_bar_line_layout.addWidget(self.right_bar_widget_line_tour_time_input_holder, 3, 4, 4,
-                                             3)  # 线路浏览 时间 提示文字
+        self.right_bar_line_layout.addWidget(self.right_bar_widget_line_tour_time_input_holder, 3, 4, 4, 3)  # 线路浏览 时间 提示文字
 
         self.right_bar_line_layout.addWidget(self.right_bar_tour_line_file, 4, 1, 4, 1)  # 线路浏览 上传文件 输入框
         self.right_bar_line_layout.addWidget(self.right_bar_tour_line_file_holder, 4, 2, 4, 2)  # 线路浏览 上传文件 提示文字
-        self.right_bar_line_layout.addWidget(self.right_bar_tour_line_file_button_download, 5, 1, 4,
-                                             3)  # 线路浏览 上传文件 下载按钮
+        self.right_bar_line_layout.addWidget(self.right_bar_tour_line_file_button_download, 5, 1, 4, 3)  # 线路浏览 上传文件 下载按钮
         self.right_bar_line_layout.addWidget(self.right_bar_widget_line_file_placeholder, 10, 2, 4, 3)  # 线路浏览 上传文件 占位符
 
         self.right_bar_tour_line_file.clicked.connect(self.right_bar_tour_line_file_slider_connect)
@@ -96,13 +95,13 @@ class LineTourView(QtWidgets.QWidget):
     def right_bar_tour_line_file_slider_connect(self):
         try:
             filename = QtWidgets.QFileDialog.getOpenFileNames(self, '选择图像', UPLOAD_PATH, "All Files(*);;Text Files(*.txt)")
-            show_file_name = filename[0][0].split('/')[-1]
+            show_file_name = os.path.basename(filename[0][0])
             self.right_bar_tour_line_file_holder.setText(show_file_name)
             self.right_bar_tour_line_filepath_coords = parser_line_coords(filename[0][0])
 
             # 路线的坐标数量， 路线的距离
             self.right_bar_tour_line_filepath_length, self.right_bar_tour_line_filepath_distance = parser_line_distance(self.right_bar_tour_line_filepath_coords)
-
+            self.kmlname = show_file_name     # 保存的文件名
         except Exception as e:
             toast = Toast(title="提示", content="上传文件不正确!", level=AlertLevel.ERROR, parent=self)
             # 获取Demo窗口的顶部中心位置
@@ -115,7 +114,6 @@ class LineTourView(QtWidgets.QWidget):
         """
         :return:
         """
-        print(self.right_bar_tour_line_flag_yes_button.isChecked())
         if self.right_bar_tour_line_filepath_coords is None:
             toast = Toast(title="提示", content="请选择上传文件!", level=AlertLevel.WARNING, parent=self)
             # 获取Demo窗口的顶部中心位置
