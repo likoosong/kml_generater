@@ -3,10 +3,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import simplekml
 from settings.model import LuckyAreas
 from tour.tour_polygon_change import TourChangePolygon
-from utlis.show_toast_interface import Toast, AlertLevel
 from tour.tour_polygon_show_hide import TourPolygonShow, TourPolygonHide
-
 from utlis.util import random_content
+from utlis.show_toast_interface import Toast, AlertLevel
 from utlis.parser_line_coords import parser_polygon_coords, parser_polygon_show_hide_coords
 from settings.constant import UPLOAD_PATH
 
@@ -114,8 +113,12 @@ class PolygonShowHideView(QtWidgets.QWidget):
             self.right_bar_tour_show_polygon_file_holder.setText(self.polygon_show_hide_file_name)
             self.right_bar_tour_show_polygon_filepath_coords = parser_polygon_show_hide_coords(filename[0][0])
         except Exception as e:
-            traceback.print_exc()
-            QtWidgets.QMessageBox.warning(self, "提示", "上传文件不正确!")
+            toast = Toast(title="提示", content="上传文件不正确!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
 
     def on_tour_show_polygon_push_button_clicked(self):
 
