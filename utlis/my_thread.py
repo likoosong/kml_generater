@@ -3,7 +3,7 @@ import traceback
 import requests
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from tour.tour_line_fix import TourLineFix
+from tour.tour_line_fix import TourLineFixGenerator
 from tour.tour_line_arount import TourLineArount
 from tour.tour_line_follow import TourLineFollow
 from tour.tour_line_follow_mode import TourLineFollowMode
@@ -39,7 +39,7 @@ class ThreadLine(QThread):    # 建立一个任务线程类
         :return:
         """
         if self.tour_type == "生长路线-固定视角":  # 生长路线-固定视角
-            TourLineFix(self.kmlname).tour_line_costom(self.kmlname, self.coords, tour_time=self.tour_time)
+            TourLineFixGenerator(self.kmlname).tour_generator(self.kmlname, self.tour_time, self.coords)
         elif self.tour_type == "生长路线-环绕视角":  # 生长路线-固定视角
             TourLineArount(self.kmlname).tour_line_arount(
                 self.kmlname, self.coords,
