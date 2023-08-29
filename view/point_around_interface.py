@@ -1,6 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from pyqt_toast import Toast
 
+from utlis.util import random_content
+from utlis.show_toast_interface import Toast, AlertLevel
 from tour.tour_point_around import TourPointAround
 
 class PointAroundView(QtWidgets.QWidget):
@@ -250,10 +251,12 @@ class PointAroundView(QtWidgets.QWidget):
             self.right_bar_widget_point_around_radius_input.setText(str(int(int(height) * 1.67)))
             self.right_bar_widget_point_around_altitude_input.setText(str(int(int(height) * 1.5)))
         except:
-            self.toast = Toast(text='你输入有误', duration=1, parent=self)
-            self.toast.setBackgroundColor(QtGui.QColor(255, 0, 0, 127))
-            self.toast.show()
-
+            toast = Toast(title="提示", content="你输入有误!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
     # 下载按钮事件
     def on_tour_point_around_kmlname_push_button_clicked(self):
         """
@@ -275,9 +278,17 @@ class PointAroundView(QtWidgets.QWidget):
                 tour_time=int(self.right_bar_widget_point_around_tour_time_input.text()),  # 环绕一圈時間,
                 clock=1 if self.right_bar_tour_point_around_clock_wise_button.isChecked() else 0
             )
-            QtWidgets.QMessageBox.information(self, "提示", "下载成功！")
+
+            toast = Toast(title="下载成功", content=random_content(), level=AlertLevel.SUCCESS, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            print(e)
-            QtWidgets.QMessageBox.warning(self, "提示", "输入的数据有误!")
+            toast = Toast(title="提示", content="输入的数据有误!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)

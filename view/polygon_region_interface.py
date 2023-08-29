@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from utlis.util import random_content
+from utlis.show_toast_interface import Toast, AlertLevel
 from settings.model import LuckyAreas
 from utlis.my_thread import ThreadLine, ThreadPolygon
 
@@ -155,8 +157,17 @@ class PolygonRegionView(QtWidgets.QWidget):
 
     def right_bar_tour_polygon_download_success(self, status):
         if status:
-            QtWidgets.QMessageBox.information(self, "提示", "下载成功！")
+            toast = Toast(title="下载成功", content=random_content(), level=AlertLevel.SUCCESS, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         else:
-            QtWidgets.QMessageBox.warning(self, "提示", "下载失败！")
+            toast = Toast(title="提示", content="下载失败!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         self.right_bar_widget_polygon_button_download.setEnabled(True)  # 按钮可点击
-

@@ -1,5 +1,8 @@
 import traceback
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+from utlis.util import random_content
+from utlis.show_toast_interface import Toast, AlertLevel
 from tour.tour_polygon_change import TourChangePolygon
 from utlis.parser_line_coords import parser_polygon_coords
 from settings.constant import UPLOAD_PATH
@@ -80,8 +83,12 @@ class PolygonChangeView(QtWidgets.QWidget):
             self.right_bar_tour_change_polygon_filepath_coords = parser_polygon_coords(filename[0][0])
 
         except Exception as e:
-            traceback.print_exc()
-            QtWidgets.QMessageBox.warning(self, "提示", "上传文件不正确!")
+            toast = Toast(title="提示", content="上传文件不正确!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
 
     def on_tour_change_polygon_push_button_clicked(self):
 
@@ -92,8 +99,16 @@ class PolygonChangeView(QtWidgets.QWidget):
                 tour_time=float(self.right_bar_widget_change_polygon_time_input.text()),
                 poly_coords=self.right_bar_tour_change_polygon_filepath_coords
             )
-            QtWidgets.QMessageBox.information(self, "提示", "下载成功！")
+            toast = Toast(title="下载成功", content=random_content(), level=AlertLevel.SUCCESS, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            QtWidgets.QMessageBox.warning(self, "提示", "输入的数据有误!")
+            toast = Toast(title="提示", content="输入的数据有误!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)

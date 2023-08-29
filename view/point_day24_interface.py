@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from utlis.util import random_content
+from utlis.show_toast_interface import Toast, AlertLevel
 from tour.tour_point_day24 import TourPointDay24
 
 class PointDay24View(QtWidgets.QWidget):
@@ -107,8 +109,18 @@ class PointDay24View(QtWidgets.QWidget):
                 longitude=float(self.right_bar_widget_point_day24_longitude_input.text()),
                 altitude=int(self.right_bar_widget_point_day24_altitude_input.text())
             )
-            QtWidgets.QMessageBox.information(self, "提示", "下载成功！")
+
+            toast = Toast(title="下载成功", content=random_content(), level=AlertLevel.SUCCESS, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
+
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            QtWidgets.QMessageBox.warning(self, "提示", "输入的数据有误!")
+            toast = Toast(title="提示", content="输入的数据有误!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)

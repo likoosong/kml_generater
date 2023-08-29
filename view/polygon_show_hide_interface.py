@@ -3,8 +3,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import simplekml
 from settings.model import LuckyAreas
 from tour.tour_polygon_change import TourChangePolygon
+from utlis.show_toast_interface import Toast, AlertLevel
 from tour.tour_polygon_show_hide import TourPolygonShow, TourPolygonHide
 
+from utlis.util import random_content
 from utlis.parser_line_coords import parser_polygon_coords, parser_polygon_show_hide_coords
 from settings.constant import UPLOAD_PATH
 
@@ -19,7 +21,7 @@ class PolygonShowHideView(QtWidgets.QWidget):
         self.right_bar_polygon_show_layout = QtWidgets.QGridLayout()  # 右侧顶部搜索框网格布局
         self.right_bar_polygon_show_widget.setLayout(self.right_bar_polygon_show_layout)
 
-        self.right_bar_tour_show_polygon = QtWidgets.QPushButton("渐隐渐藏")
+        self.right_bar_tour_show_polygon = QtWidgets.QPushButton("渐显渐藏")
         self.right_bar_tour_show_polygon.setObjectName("right_lable_title")
 
         # 区域渐显 动画方式 - 区域动画&形状变化动画
@@ -133,8 +135,119 @@ class PolygonShowHideView(QtWidgets.QWidget):
                     polygon_coords=self.right_bar_tour_show_polygon_filepath_coords
                 )
 
-            QtWidgets.QMessageBox.information(self, "提示", "下载成功！")
+            toast = Toast(title="下载成功", content=random_content(), level=AlertLevel.SUCCESS, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            QtWidgets.QMessageBox.warning(self, "提示", "输入的数据有误!")
+            toast = Toast(title="提示", content="下载失败!", level=AlertLevel.ERROR, parent=self)
+            # 获取Demo窗口的顶部中心位置
+            top_center_point = self.mapToGlobal(QtCore.QPoint(self.rect().width() // 2, 0))
+            x_position = top_center_point.x() - toast.width() // 2
+            y_position = top_center_point.y()
+            toast.showToast(x_position, y_position)
+
+
+
+
+
+
+'''
+
+	<StyleMap id="msn_ylw-pushpin3">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#sn_ylw-pushpin00</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#sh_ylw-pushpin000</styleUrl>
+		</Pair>
+	</StyleMap>
+
+
+	<Style id="sn_ylw-pushpin00">
+		<IconStyle>
+			<scale>1.1</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffffcc66</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>ffffcc66</color>
+		</PolyStyle>
+	</Style>
+	
+	
+	<Style id="sh_ylw-pushpin000">
+		<IconStyle>
+			<scale>1.3</scale>
+			<Icon>
+				<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+			</Icon>
+			<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+		</IconStyle>
+		<LineStyle>
+			<color>ffffcc66</color>
+		</LineStyle>
+		<PolyStyle>
+			<color>ffffcc66</color>
+		</PolyStyle>
+	</Style>
+	
+
+
+
+
+
+
+
+
+
+
+<StyleMap id="msn_ylw-pushpin11">
+    <Pair>
+        <key>normal</key>
+        <styleUrl>#sn_ylw-pushpin11</styleUrl>
+    </Pair>
+    <Pair>
+        <key>highlight</key>
+        <styleUrl>#sh_ylw-pushpin00</styleUrl>
+    </Pair>
+</StyleMap>
+
+<Style id="sn_ylw-pushpin11">
+    <IconStyle>
+        <scale>1.1</scale>
+        <Icon>
+            <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+        </Icon>
+        <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+    </IconStyle>
+    <LineStyle>
+        <color>ffffcc00</color>
+        <width>10</width>
+    </LineStyle>
+</Style>
+
+<Style id="sh_ylw-pushpin00">
+    <IconStyle>
+        <scale>1.3</scale>
+        <Icon>
+            <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+        </Icon>
+        <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
+    </IconStyle>
+    <LineStyle>
+        <color>ffffcc00</color>
+        <width>10</width>
+    </LineStyle>
+</Style>
+
+'''
