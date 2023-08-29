@@ -3,11 +3,13 @@ from datetime import datetime
 
 import simplekml
 from simplekml import Kml, Snippet, Types, Style
-
 from settings.constant import FILEPATH
 
-
-from utlis.parser_line_coords import parser_line_coords
+'''
+固定视角-线路的生长路线
+1. 仅仅支持1条线路的变化
+2. 默认的颜色为黄色
+'''
 
 class TourLineFixGenerator(object):
 
