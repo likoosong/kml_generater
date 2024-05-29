@@ -2,9 +2,10 @@
 
 本程序写给：自驾旅行、地理爱好者、历史地图爱好者
 
-我的B站账号：https://space.bilibili.com/153276950
+[我的B站https://space.bilibili.com/386433605](https://space.bilibili.com/386433605) 
+原作者的B站账号：https://space.bilibili.com/153276950
 
-#### 一、KML generater 
+## 一、KML generater 
 
 - 运行
     ```
@@ -17,7 +18,7 @@
 	pyinstaller --windowed --onefile --key '123456789' --icon=image/logo.ico --clean --noconfirm main.py
 	```
 
-#### 二、功能介绍
+## 二、功能介绍
 
 <img src="https://img-blog.csdnimg.cn/66dceeb5833949999bb168f8cfbd10c6.png" alt="图片描述">
 
